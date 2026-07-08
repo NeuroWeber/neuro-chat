@@ -1,0 +1,11 @@
+{
+  "html-css-class-completion.includeLanguages": {
+    "javascript": "html",
+    "javascriptreact": "html",
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  "html-css-class-completion.includeGlobPattern": "**/*.{html,js,jsx,ts,tsx,css,scss,sass,less}",
+  "html-css-class-completion.suggestFromAllClasses": true,
+  "html-css-class-completion.bootstrap.enabled": true
+}
