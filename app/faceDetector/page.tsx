@@ -1,8 +1,9 @@
 import React from 'react'
-import * as faceapi from 'face-api.js'
 
-export default function page() {
+function Page() {
   return (
-    <div>page</div>
+    <div>Page</div>
   )
 }
+
+export default Page
