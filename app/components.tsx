@@ -76,7 +76,7 @@ export const ChannelConnect = ({
           <div>
             <label
               htmlFor="channel-input"
-              className="text-lg font-semibold text-gray-200 block mb-2"
+              className="text-lg mt-0 font-semibold text-gray-200 block mb-2"
             >
               Channel Name
             </label>

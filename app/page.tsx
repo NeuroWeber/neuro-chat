@@ -230,8 +230,8 @@ export default function HomePage() {
 
   const subscribeChannel = async () => {
     if (
-      (!channelTitle.trim() && channelTitle != "somto") ||
-      channelTitle != "chisom"
+      !channelTitle.trim() ||
+      (channelTitle != "somto" && channelTitle != "chisom")
     ) {
       toast.error("Please enter a channel name appriopriately");
       return;
@@ -300,12 +300,10 @@ export default function HomePage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-red-900/20 border-l-4 border-red-500 p-4 text-red-200 text-sm">
-          <p className="font-semibold">⚠️ Error:</p>
-          <p className="text-xs mt-1">{error}</p>
-          <p className="text-xs mt-2 text-red-300">
-            Make sure your Supabase tables exist and environment variables are
-            set.
+        <div className="bg-red-900/20 border-l-4 mt-3 border-red-500 p-2 text-red-200">
+          <p className="text-lg mt-2 text-red-300">
+            ⚠️Sorry but an error occurred make sure that you have available
+            internet connection then try again
           </p>
         </div>
       )}
@@ -323,7 +321,7 @@ export default function HomePage() {
                 ) : messages.length === 0 ? (
                   <EmptyState message="No messages yet. Start the conversation!" />
                 ) : (
-                  <>
+                  <div className="grid grid-cols-1 lg:grid-cols-2">
                     {messages.map((msg) => (
                       <div
                         key={msg.id}
@@ -349,7 +347,7 @@ export default function HomePage() {
                       </div>
                     ))}
                     <div ref={messagesEndRef} />
-                  </>
+                  </div>
                 )}
               </div>
 
