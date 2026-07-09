@@ -9,19 +9,19 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessagesSquareIcon, SendIcon, Loader2 } from "lucide-react";
+import { MessagesSquareIcon, SendIcon, Loader2, WifiIcon } from "lucide-react";
 import React, { ChangeEvent, useState } from "react";
 
 export function Header(): React.JSX.Element {
   return (
-    <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg">
-      <div className="flex flex-col lg:flex-row justify-center items-center gap-4 py-6 px-4">
+    <div className="bg-linear-to-r rounded-4 mx-3 from-blue-600 to-purple-600 text-white shadow-lg">
+      <div className="flex flex-col lg:flex-row justify-center items-center gap-4 py-4 px-4">
         <MessagesSquareIcon size={64} className="text-white drop-shadow-lg" />
         <h1 className="text-5xl lg:text-6xl font-bold text-white drop-shadow-md">
           NeuroChat
         </h1>
       </div>
-      <p className="text-center text-blue-100 text-lg pb-6 px-4">
+      <p className="text-center text-blue-100 text-lg pb-2 px-4">
         Your #1 best chatting platform for families
       </p>
     </div>
@@ -54,10 +54,11 @@ export const ChannelConnect = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
-          className="fixed top-6 right-6 bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg px-6 py-2 shadow-lg hover:shadow-xl transition-all z-40"
+          title="connect to a channel"
+          className="fixed top-6 btn  right-6 bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg px-6 py-2 shadow-lg hover:shadow-xl transition-all z-40"
           onClick={() => setIsOpen(true)}
         >
-          Connect to Channel
+          <WifiIcon size={50} />
         </Button>
       </DialogTrigger>
 
@@ -66,16 +67,16 @@ export const ChannelConnect = ({
           <h2 className="text-2xl font-bold text-white text-center">
             Join a Channel
           </h2>
-          <p className="text-sm text-gray-300 text-center mt-2">
+          <p className="text-lg text-gray-300 text-center">
             Enter a channel name to start chatting
           </p>
         </DialogHeader>
 
-        <div className="space-y-4 py-4">
+        <div className="py-4">
           <div>
             <label
               htmlFor="channel-input"
-              className="text-sm font-semibold text-gray-200 block mb-2"
+              className="text-lg font-semibold text-gray-200 block mb-2"
             >
               Channel Name
             </label>
@@ -99,7 +100,7 @@ export const ChannelConnect = ({
             <DialogClose asChild>
               <Button
                 variant="outline"
-                className="flex-1 border-slate-600 text-gray-200 hover:bg-slate-700"
+                className="flex-1 rounded text-white  border-slate-600 hover:bg-slate-700"
               >
                 Cancel
               </Button>
@@ -107,7 +108,7 @@ export const ChannelConnect = ({
             <Button
               onClick={handleSubmit}
               disabled={!channelTitle.trim()}
-              className="flex-1 bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 rounded bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Connect
             </Button>
@@ -156,14 +157,14 @@ export const CredentialBar = ({
           value={content}
           onChange={handleChange}
           onKeyPress={handleKeyPress}
-          placeholder="Type your message... (Shift+Enter for new line)"
+          placeholder="Type your message..."
           className="flex-1 bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg"
           disabled={!channel}
         />
         <Button
           onClick={handleSend}
           disabled={!content.trim() || !channel || isSending}
-          className="bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="bg-linear-to-r rounded from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-6 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           {isSending ? (
             <Loader2 size={18} className="animate-spin" />
@@ -176,10 +177,10 @@ export const CredentialBar = ({
 
       {channel && (
         <div className="mt-3 p-3 bg-linear-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/20 rounded-lg">
-          <p className="text-xs sm:text-sm text-gray-200">
+          <p className="text-lg sm:text-sm text-gray-200">
             📍 Connected to{" "}
-            <span className="font-bold text-blue-300 capitalize">
-              {channel}
+            <span className="font-bold text-lg text-blue-300 capitalize">
+              {channel} channel
             </span>
           </p>
         </div>

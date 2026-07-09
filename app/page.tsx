@@ -12,6 +12,7 @@ import {
 import { supabase } from "./supabase";
 import { RealtimeChannel } from "@supabase/supabase-js";
 import { toast } from "react-hot-toast";
+import { TrashIcon } from "lucide-react";
 
 interface Message {
   id: any;
@@ -40,6 +41,20 @@ export default function HomePage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  async function deleteMessage(id: string) {
+    messages.filter((messages) => messages.id !== id);
+    const { error } = await supabase
+      .from(currentActiveChannel)
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      toast.error("there was a problem deleting the message");
+    } else {
+      toast.success("messaged deleted successfully");
+    }
+  }
 
   // Load initial messages and setup realtime listener
   useEffect(() => {
@@ -214,8 +229,11 @@ export default function HomePage() {
   };
 
   const subscribeChannel = async () => {
-    if (!channelTitle.trim()) {
-      toast.error("Please enter a channel name");
+    if (
+      (!channelTitle.trim() && channelTitle != "somto") ||
+      channelTitle != "chisom"
+    ) {
+      toast.error("Please enter a channel name appriopriately");
       return;
     }
 
@@ -318,6 +336,15 @@ export default function HomePage() {
                           <p className="text-xs text-gray-400 mt-2">
                             {new Date(msg.timestamp).toLocaleTimeString()}
                           </p>
+
+                          <button
+                            onClick={() => {
+                              deleteMessage(msg.id);
+                            }}
+                            className="btn btn-warning p-2"
+                          >
+                            <TrashIcon size={50} />
+                          </button>
                         </div>
                       </div>
                     ))}
