@@ -14,7 +14,7 @@ import React, { ChangeEvent, useState } from "react";
 
 export function Header(): React.JSX.Element {
   return (
-    <div className="bg-linear-to-r rounded-4 mx-3 from-blue-600 to-purple-600 text-white shadow-lg">
+    <div className="bg-linear-to-r mt-2 rounded-4 mx-3 from-blue-600 to-purple-600 text-white shadow-lg">
       <div className="flex flex-col lg:flex-row justify-center items-center gap-4 py-4 px-4">
         <MessagesSquareIcon size={64} className="text-white drop-shadow-lg" />
         <h1 className="text-5xl lg:text-6xl font-bold text-white drop-shadow-md">

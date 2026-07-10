@@ -319,7 +319,7 @@ export default function HomePage() {
                 {isLoading ? (
                   <LoadingSpinner />
                 ) : messages.length === 0 ? (
-                  <EmptyState message="No messages yet. Start the conversation!" />
+                  <EmptyState message="No messages yet" />
                 ) : (
                   <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                     {messages.map((msg) => (
