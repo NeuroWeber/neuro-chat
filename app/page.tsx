@@ -42,7 +42,7 @@ export default function HomePage() {
     scrollToBottom();
   }, [messages]);
 
-  async function deleteMessage(id: string) {
+  async function deleteMessage(ID: string) {
     if (!currentActiveChannel) {
       toast.error("Please connect to a channel first");
       return;
@@ -54,13 +54,14 @@ export default function HomePage() {
       const { error } = await supabase
         .from(tableName)
         .delete()
-        .match({ id, channel: currentActiveChannel });
+        .eq("id", ID)
 
       if (error) {
         throw error;
+        toast.error('could not delete')
       }
 
-      setMessages((prev) => prev.filter((message) => message.id !== id));
+      setMessages((prev) => prev.filter((message) => message.id !== ID));
       toast.success("Message deleted successfully");
     } catch (err) {
       const errorMessage =
