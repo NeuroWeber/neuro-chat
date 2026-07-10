@@ -43,16 +43,32 @@ export default function HomePage() {
   }, [messages]);
 
   async function deleteMessage(id: string) {
-    setMessages(messages.filter((message) => message.id !== id));
-    const { error } = await supabase
-      .from(currentActiveChannel)
-      .delete()
-      .eq("id", id);
+    if (!currentActiveChannel) {
+      toast.error("Please connect to a channel first");
+      return;
+    }
 
-    if (error) {
-      toast.error("there was a problem deleting the message");
-    } else {
-      toast.success("messaged deleted successfully");
+    const tableName = currentActiveChannel;
+
+    try {
+      const { error } = await supabase
+        .from(tableName)
+        .delete()
+        .match({ id, channel: currentActiveChannel });
+
+      if (error) {
+        throw error;
+      }
+
+      setMessages((prev) => prev.filter((message) => message.id !== id));
+      toast.success("Message deleted successfully");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "There was a problem deleting the message";
+      console.error("Delete error:", errorMessage);
+      toast.error(errorMessage);
     }
   }
 
@@ -178,6 +194,23 @@ export default function HomePage() {
                   console.log("✅ New message added to UI:", newMessage.id);
                   return [...prev, newMessage];
                 });
+              }
+            },
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "DELETE",
+              schema: "public",
+              table: currentActiveChannel,
+              filter: `channel=eq.${currentActiveChannel}`,
+            },
+            (payload) => {
+              const deletedMessage = payload.old as Message;
+              if (deletedMessage?.id) {
+                setMessages((prev) =>
+                  prev.filter((msg) => msg.id !== deletedMessage.id),
+                );
               }
             },
           )
