@@ -43,7 +43,7 @@ export default function HomePage() {
   }, [messages]);
 
   async function deleteMessage(id: string) {
-    messages.filter((messages) => messages.id !== id);
+    setMessages(messages.filter((message) => message.id !== id));
     const { error } = await supabase
       .from(currentActiveChannel)
       .delete()
@@ -321,27 +321,30 @@ export default function HomePage() {
                 ) : messages.length === 0 ? (
                   <EmptyState message="No messages yet. Start the conversation!" />
                 ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                     {messages.map((msg) => (
                       <div
                         key={msg.id}
                         className="group flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300"
                       >
-                        <div className="flex-1 bg-linear-to-r from-slate-700 to-slate-600 rounded-lg p-3 hover:from-slate-600 hover:to-slate-500 transition-all hover:shadow-md">
-                          <p className="text-white text-sm wrap-break-word">
-                            {msg.content}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-2">
-                            {new Date(msg.timestamp).toLocaleTimeString()}
-                          </p>
+                        <div className="flex-1 justify-between flex bg-linear-to-r from-slate-700 to-slate-600 rounded-lg p-3 hover:from-slate-600 hover:to-slate-500 transition-all hover:shadow-md">
+                          <div>
+                            <p className="text-white text-sm wrap-break-word">
+                              {msg.content}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-2">
+                              {new Date(msg.timestamp).toLocaleTimeString()}
+                            </p>
+                          </div>
 
                           <button
+                            title="delete message"
                             onClick={() => {
                               deleteMessage(msg.id);
                             }}
-                            className="btn btn-warning p-2"
+                            className="btn p-2 hover:bg-slate-700 bg-black btn-warning active:bg-black/35 rounded-4"
                           >
-                            <TrashIcon size={50} />
+                            <TrashIcon size={30} className="text-orange-500" />
                           </button>
                         </div>
                       </div>
